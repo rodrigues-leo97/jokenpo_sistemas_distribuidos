@@ -7,14 +7,17 @@ import java.util.Scanner;
 public class Client {
     public static void main(String[] args) {
 
+        //getOutput-> para escrever no canal de comunicação / getInputStream -> para entrada de dados
+
         //VARIÁVEIS
         PrintStream output = null;  //system.OUT.println -> ou seja, para exibir algo na tela
         PrintStream outputJogo = null;
 
         //Scanner´s
-        Scanner input = null;
+        Scanner input = null; //getInputStream()
         Scanner teclado = null;
         Scanner tecladoEscolhaJogo = null; //Scanner para identificar qual tipo de jogo o User irá querer jogar
+        Scanner sc = new Scanner(System.in);
 
         final String IP = "127.0.0.1"; //ip do host pessoal
         final int PORT = 12345; //porta do SERVER que quer se conectar
@@ -54,17 +57,23 @@ public class Client {
 
                 //deixando as mensagens de forma dinâmica
                 String msg;
-                        do {
-                            System.out.println("Digite a mensagem: ");
-                            msg = teclado.nextLine(); //ao invés de receber mensagem mandada pelo input eu crio um Scanner para ler oq foi digitado
-                            output.println(msg); //system.out.println -> para exibir na tela do servidor
-                        }while (!msg.equalsIgnoreCase("exit")); //para caso a mensagem seja === exit(desconsiderando maiusculas ou minusculas) ele finaliza a aplicação
+                    System.out.println("Escolha Pedra(1), Papel(2) ou Tesoura(3): ");
+                    msg = teclado.nextLine(); //ao invés de receber mensagem mandada pelo input eu crio um Scanner para ler oq foi digitado
+                    output.println(msg); //system.out.println -> para exibir na tela do servidor
+                        //while (!msg.equalsIgnoreCase("exit")); //para caso a mensagem seja === exit(desconsiderando maiusculas ou minusculas) ele finaliza a aplicação
+                    System.out.println(input.nextLine());
 
             }catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
             //FASE DE ENCERRAMENTO DA CONEXÃO
+            try {
+                output.close();
+                socket.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
 
     }
 }
