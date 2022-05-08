@@ -34,7 +34,7 @@ public class Server {
                 Scanner input = new Scanner(clientSocket.getInputStream());
                 String msg;
                 msg = input.nextLine();
-                System.out.println("Mostrando na tela a opção escolhida: " + msg);
+                //System.out.println("Mostrando na tela a opção escolhida: " + msg);
                 //CRIAÇÃO DA THREAD - AtendeCli.java
                     //APÓS ISSO ENVIAR O CLIENT PARA ESSA THREAD E ELA IRÁ ATENDE-LO
                 if(msg.equalsIgnoreCase("1")) {

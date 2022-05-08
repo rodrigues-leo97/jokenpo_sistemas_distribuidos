@@ -2,6 +2,7 @@ package chat.server;
 
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Random;
 import java.util.Scanner;
 
 public class AtendeCli extends Thread{
@@ -32,7 +33,22 @@ public class AtendeCli extends Thread{
             String msg;
             do {
                 msg = input.nextLine(); //uso scanner para ler um texto e guardo dentro dessa variavel
-                System.out.println("Mensagem recebida: " + msg);
+
+                Random random = new Random();
+                int numero = ((random.nextInt(2)+1));
+                String CPU = String.valueOf(numero); //convertendo um inteiro para String
+
+                if(msg.equalsIgnoreCase("1") && CPU.equalsIgnoreCase("2") || msg.equalsIgnoreCase("2") && CPU.equalsIgnoreCase("3") || msg.equalsIgnoreCase("3") && CPU.equalsIgnoreCase("1")) {
+                    //CPU vence
+                    output.println("CPU venceu >8===D");
+                }else if(CPU.equalsIgnoreCase("1") && msg.equalsIgnoreCase("2") || CPU.equalsIgnoreCase("2") && msg.equalsIgnoreCase("3") || CPU.equalsIgnoreCase("3") && msg.equalsIgnoreCase("1")) {
+                    //Usuário VENCEU da CPU
+                    output.println("Você venceu");
+                }else {
+                    output.println("Empate");
+                }
+
+                //System.out.println("Mensagem recebida: " + msg); seria a escolha do Cliente para o Jokenpo
             }while (!msg.equalsIgnoreCase("exit"));
 
         }catch (Exception e) {
