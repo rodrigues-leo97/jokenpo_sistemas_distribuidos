@@ -8,11 +8,13 @@ public class Client {
     public static void main(String[] args) {
 
         //VARIÁVEIS
-        PrintStream output = null;  //system.OUT.print -> ou seja, para exibir algo na tela
+        PrintStream output = null;  //system.OUT.println -> ou seja, para exibir algo na tela
+        PrintStream outputJogo = null;
 
-        //PARA CAPTURAR DADOS, APÓS ISSO IDENTIFICAR SE É DO TECLADO OU NÃO
+        //Scanner´s
         Scanner input = null;
         Scanner teclado = null;
+        Scanner tecladoEscolhaJogo = null; //Scanner para identificar qual tipo de jogo o User irá querer jogar
 
         final String IP = "127.0.0.1"; //ip do host pessoal
         final int PORT = 12345; //porta do SERVER que quer se conectar
@@ -24,6 +26,19 @@ public class Client {
                 //2->IP
         try {
             socket = new Socket(IP, PORT); //passando IP e PORTA para o socket fazer a conexão com o SERVER
+            outputJogo = new PrintStream(socket.getOutputStream()); //para dizer que essa variável vai enviar mensagens para o SERVER
+
+            System.out.println("Escolha 1 caso queira jogar contra a CPU \nEscolha 2 caso vc queria jogar contra um adversário");
+            tecladoEscolhaJogo = new Scanner(System.in); //instanciando um novo Scanner para o usuário escolher
+
+            String escolha = tecladoEscolhaJogo.nextLine(); //escolha do tipo de jogo
+            while(!(escolha.equalsIgnoreCase("1") || escolha.equalsIgnoreCase("2"))){
+                System.out.println("Essa opção está indisponível, escolha novamente: ");
+                escolha = tecladoEscolhaJogo.nextLine();
+            }
+            outputJogo.println(escolha); //para printar na tela do servidor quando capturar oq foi enviado a escolha do user
+
+
         }catch (Exception e) {
             System.out.println("Não foi possível se conectar ao servidor desejado :(");
             System.out.println("possível causa do erro: " + e.getMessage());
@@ -32,7 +47,7 @@ public class Client {
 
         //FASE DE COMUNICAÇÃO
             try {
-                //getOutput-> para escrever no canal de comunicação / getInputStream -> para entrada de dados
+                //getOutput-> para escrever no canal de comunicação(enviando para o SERVER) / getInputStream -> para entrada de dados
                 output = new PrintStream(socket.getOutputStream()); //para escrever no canal de comunicação do SOCKET(SERVER)
                 input = new Scanner(socket.getInputStream()); // retorna exatamente o que o cliente está enviando “do outro lado”
                 teclado = new Scanner(System.in);

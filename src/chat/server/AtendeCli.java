@@ -24,7 +24,7 @@ public class AtendeCli extends Thread{
         //FASE DE COMUNICAÇÃO
         try {
             //preciso de 2 obj, um para poder ler e outro para poder escrever
-            //system.in -> para ler o teclado / getInputStream -> ler as mensagens de determinado canal de comunicação
+            //system.in(system.out.println) -> para ler o teclado / getInputStream -> ler as mensagens de determinado canal de comunicação
             input = new Scanner(cliente.getInputStream()); //para ler as mensagens que virão dentro desse canal de comunicação
 
             output = new PrintStream(cliente.getOutputStream()); //para escrever no canal de comunicação do cliente
