@@ -1,11 +1,11 @@
-package chat.server;
+package chat.threads;
 
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Random;
 import java.util.Scanner;
 
-public class AtendeCli extends Thread{
+public class ThreadCpu extends Thread{
     //Tem a tarefa de conversar com o cliente
         //1-> saber o socket(ip)
             //2-> receber mensagens do cliente(Scanner)
@@ -16,7 +16,7 @@ public class AtendeCli extends Thread{
     private PrintStream output = null;
 
     //CONSTRUCTOR para saber com quem a Thread ira conversar(cliente)
-    public AtendeCli(Socket cliente) {
+    public ThreadCpu(Socket cliente) {
         this.cliente = cliente;
     }
 

@@ -1,5 +1,7 @@
 package chat.server;
 
+import chat.threads.ThreadCpu;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -39,8 +41,8 @@ public class Server {
                     //APÓS ISSO ENVIAR O CLIENT PARA ESSA THREAD E ELA IRÁ ATENDE-LO
                 if(msg.equalsIgnoreCase("1")) {
                     System.out.println("teste1");
-                    AtendeCli atendeCli = new AtendeCli(clientSocket);
-                    atendeCli.start();//thread não entra em execução se não for iniciada, por isso o Start
+                    ThreadCpu threadCpu = new ThreadCpu(clientSocket);
+                    threadCpu.start();//thread não entra em execução se não for iniciada, por isso o Start
                 }else{
                     System.out.println("Teste2");
                 }
