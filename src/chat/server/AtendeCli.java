@@ -35,7 +35,7 @@ public class AtendeCli extends Thread{
                 msg = input.nextLine(); //uso scanner para ler um texto e guardo dentro dessa variavel
 
                 Random random = new Random();
-                int numero = ((random.nextInt(2)+1));
+                int numero = ((random.nextInt(2)+1)); //+1 pq se inicia em zero
                 String CPU = String.valueOf(numero); //convertendo um inteiro para String
 
                 if(msg.equalsIgnoreCase("1") && CPU.equalsIgnoreCase("2") || msg.equalsIgnoreCase("2") && CPU.equalsIgnoreCase("3") || msg.equalsIgnoreCase("3") && CPU.equalsIgnoreCase("1")) {
