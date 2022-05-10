@@ -36,7 +36,7 @@ public class Client {
 
             String escolha = tecladoEscolhaJogo.nextLine(); //escolha do tipo de jogo
             while(!(escolha.equalsIgnoreCase("1") || escolha.equalsIgnoreCase("2"))){
-                System.out.println("Essa opção está indisponível, escolha novamente: ");
+                System.out.println("Essa opção está indisponível, digite qualquer coisa para continuar: ");
                 escolha = tecladoEscolhaJogo.nextLine();
             }
             outputJogo.println(escolha); //para printar na tela do servidor quando capturar oq foi enviado a escolha do user
@@ -61,7 +61,7 @@ public class Client {
                     msg = teclado.nextLine(); //ao invés de receber mensagem mandada pelo input eu crio um Scanner para ler oq foi digitado
                     output.println(msg); //system.out.println -> para exibir na tela do servidor
                         //while (!msg.equalsIgnoreCase("exit")); //para caso a mensagem seja === exit(desconsiderando maiusculas ou minusculas) ele finaliza a aplicação
-                    System.out.println(input.nextLine());
+                    System.out.println(input.nextLine()); //mensagem de VENCER, PERDER ou EMPATAR
 
             }catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -76,4 +76,5 @@ public class Client {
             }
 
     }
+
 }
