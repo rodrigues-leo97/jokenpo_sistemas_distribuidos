@@ -56,7 +56,7 @@ public class Server {
                     threadCpu.start();//thread não entra em execução se não for iniciada, por isso o Start
                 }else if(msg.equals("2")){
                     System.out.println("Entrou na opção 2");
-                    ThreadJogadorVsJogador threadJogadorVsJogador = new ThreadJogadorVsJogador(clientSocket, threadJogadores);
+                    ThreadJogadorVsJogador threadJogadorVsJogador = new ThreadJogadorVsJogador(clientSocket);
 
                     //adicionando para a lista da Thread de Jogador vs Jogador
                     threadJogadores.add(threadJogadorVsJogador);

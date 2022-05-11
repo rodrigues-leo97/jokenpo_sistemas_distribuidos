@@ -55,11 +55,15 @@ public class Client {
                 input = new Scanner(socket.getInputStream()); // retorna exatamente o que o cliente está enviando “do outro lado”
                 teclado = new Scanner(System.in);
 
+                System.out.println("Digite seu nome: ");
+                String nome = sc.next();
+
                 //deixando as mensagens de forma dinâmica
                 String msg;
                     System.out.println("Escolha Pedra(1), Papel(2) ou Tesoura(3): ");
                     msg = teclado.nextLine(); //ao invés de receber mensagem mandada pelo input eu crio um Scanner para ler oq foi digitado
                     output.println(msg); //system.out.println -> para exibir na tela do servidor
+                    output.println(nome);
                         //while (!msg.equalsIgnoreCase("exit")); //para caso a mensagem seja === exit(desconsiderando maiusculas ou minusculas) ele finaliza a aplicação
                     System.out.println(input.nextLine()); //mensagem de VENCER, PERDER ou EMPATAR
 

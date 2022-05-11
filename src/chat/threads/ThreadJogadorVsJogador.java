@@ -1,9 +1,11 @@
 package chat.threads;
 
+import chat.util.Comunicacao;
+import chat.util.EscolhaJogador;
+
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class ThreadJogadorVsJogador extends Thread{
@@ -17,16 +19,30 @@ public class ThreadJogadorVsJogador extends Thread{
     private Scanner input = null;
     private PrintStream output = null;
     private ArrayList<ThreadJogadorVsJogador> threadsJogadores;
+    EscolhaJogador escolhaJogador;
+
+    private ArrayList<Socket> todosConectados = new ArrayList<>();
+    Comunicacao comunicacao;
 
     //CONSTRUCTOR para saber com quem a Thread ira conversar(cliente)
-    public ThreadJogadorVsJogador(Socket cliente, ArrayList<ThreadJogadorVsJogador> threadsJogadores) {
+    public ThreadJogadorVsJogador(Socket cliente) {
         this.cliente = cliente;
-        this.threadsJogadores = threadsJogadores; //para ter o controle certo das Threads se conectando na lista
+        //this.threadsJogadores = threadsJogadores; //para ter o controle certo das Threads se conectando na lista
+        this.comunicacao = new Comunicacao(cliente);
     }
+
+    public void listaDeConectados(ArrayList<Socket> todosConectados) {
+        this.todosConectados = todosConectados;
+    }
+
+
 
     @Override
     public void run() {
         //FASE DE COMUNICAÇÃO
+
+        this.escolhaJogador = (EscolhaJogador) comunicacao.receive();
+
         try {
             //preciso de 2 obj, um para poder ler e outro para poder escrever
             //system.in(system.out.println) -> para ler o teclado / getInputStream -> ler as mensagens de determinado canal de comunicação
@@ -35,32 +51,13 @@ public class ThreadJogadorVsJogador extends Thread{
             output = new PrintStream(cliente.getOutputStream()); //para escrever no canal de comunicação do cliente
 
             String msg;
+            String nome;
             do {
                 msg = input.nextLine(); //uso scanner para ler um texto e guardo dentro dessa variavel
+                nome = input.nextLine();
                 System.out.println("Recebido: " + msg);
+                System.out.println("Nome do jogador: " + nome);
 
-                //ArrayList<ThreadJogadorVsJogador> threadsJogadores;
-
-                for(ThreadJogadorVsJogador threadJogadorVsJogador : threadsJogadores) {
-                    int cont = 0;
-                    //
-                    threadJogadorVsJogador.printResultado(msg);
-                }
-
-
-//                Random random = new Random();
-//                int numero = (random.nextInt(2)) + 1; //+1 pq se inicia em zero
-//                String CPU = String.valueOf(numero); //convertendo um inteiro para String
-//
-//                if (msg.equalsIgnoreCase("1") && CPU.equalsIgnoreCase("2") || msg.equalsIgnoreCase("2") && CPU.equalsIgnoreCase("3") || msg.equalsIgnoreCase("3") && CPU.equalsIgnoreCase("1")) {
-//                    //CPU vence
-//                    output.println("CPU venceu >8===D");
-//                } else if (CPU.equalsIgnoreCase("1") && msg.equalsIgnoreCase("2") || CPU.equalsIgnoreCase("2") && msg.equalsIgnoreCase("3") || CPU.equalsIgnoreCase("3") && msg.equalsIgnoreCase("1")) {
-//                    //Usuário VENCEU da CPU
-//                    output.println("Você venceu");
-//                } else {
-//                    output.println("Empate");
-//                }
 
             } while (!msg.equalsIgnoreCase("exit"));
 
@@ -79,6 +76,15 @@ public class ThreadJogadorVsJogador extends Thread{
 
     public void printResultado(String msg) {
         output.println("> " + msg);
+    }
+
+    public boolean procuraJogador() {
+        for(int i = 0; i < todosConectados.size(); i++) {
+            if(this.cliente != todosConectados.get(i)) {
+                if(this.escolhaJogador.getEscolha1() != this.escolhaJogador.getEscolha2()) return false;
+            }
+        }
+        return true;
     }
 
 }
