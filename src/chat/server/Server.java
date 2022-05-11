@@ -58,6 +58,12 @@ public class Server {
                     System.out.println("Entrou na opção 2");
                     ThreadJogadorVsJogador threadJogadorVsJogador = new ThreadJogadorVsJogador(clientSocket, threadJogadores);
 
+//                    for(int i = 0; i < 2; i++) {
+//                        threadJogadores.get(i).getThreadsJogador();
+//                    }
+
+
+
                     //adicionando para a lista da Thread de Jogador vs Jogador
                     threadJogadores.add(threadJogadorVsJogador);
 

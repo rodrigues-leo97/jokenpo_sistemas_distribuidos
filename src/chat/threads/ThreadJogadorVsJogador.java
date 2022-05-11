@@ -3,7 +3,6 @@ package chat.threads;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class ThreadJogadorVsJogador extends Thread{
@@ -16,12 +15,16 @@ public class ThreadJogadorVsJogador extends Thread{
     private Socket cliente; //serve para armazenar o retorno do accept() -> pedido de conexão
     private Scanner input = null;
     private PrintStream output = null;
-    private ArrayList<ThreadJogadorVsJogador> threadsJogadores;
+    private ArrayList<ThreadJogadorVsJogador> threadsJogador;
 
     //CONSTRUCTOR para saber com quem a Thread ira conversar(cliente)
-    public ThreadJogadorVsJogador(Socket cliente, ArrayList<ThreadJogadorVsJogador> threadsJogadores) {
+    public ThreadJogadorVsJogador(Socket cliente, ArrayList<ThreadJogadorVsJogador> threadsJogador) {
         this.cliente = cliente;
-        this.threadsJogadores = threadsJogadores; //para ter o controle certo das Threads se conectando na lista
+        this.threadsJogador = threadsJogador; //para ter o controle certo das Threads se conectando na lista
+    }
+
+    public ArrayList<ThreadJogadorVsJogador> getThreadsJogador() {
+        return threadsJogador;
     }
 
     @Override
@@ -35,13 +38,16 @@ public class ThreadJogadorVsJogador extends Thread{
             output = new PrintStream(cliente.getOutputStream()); //para escrever no canal de comunicação do cliente
 
             String msg;
+            String nome;
             do {
                 msg = input.nextLine(); //uso scanner para ler um texto e guardo dentro dessa variavel
                 System.out.println("Recebido: " + msg);
+                nome = input.nextLine();
+                System.out.println(nome);
 
                 //ArrayList<ThreadJogadorVsJogador> threadsJogadores;
 
-                for(ThreadJogadorVsJogador threadJogadorVsJogador : threadsJogadores) {
+                for(ThreadJogadorVsJogador threadJogadorVsJogador : threadsJogador) {
                     int cont = 0;
                     //
                     threadJogadorVsJogador.printResultado(msg);
